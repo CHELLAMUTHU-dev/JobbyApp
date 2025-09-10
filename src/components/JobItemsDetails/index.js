@@ -87,7 +87,7 @@ class JobItemsDetails extends Component {
       />
       <h1>Oops! Something Went Wrong</h1>
       <p>We cannot seem to find the page you are looking for</p>
-      <button>Retry</button>
+      <button type="button">Retry</button>
     </div>
   )
 

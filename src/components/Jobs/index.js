@@ -17,10 +17,11 @@ const apiStatusConstants = {
 class Jobs extends Component {
   state = {
     apiStatus: apiStatusConstants.initial,
-    jobDetailsList: {},
+    jobDetailsList: [],
     employmentType: '',
     minimumPackage: '',
     search: '',
+    locationList: [],
   }
 
   componentDidMount() {
@@ -38,6 +39,24 @@ class Jobs extends Component {
 
   updateSaleryRange = salaery => {
     this.setState({minimumPackage: salaery}, this.getJobDetails)
+  }
+
+  updateLocation = location => {
+    this.setState(prevState => {
+      let updatedLocations = [...prevState.locationList]
+      if (updatedLocations.includes(location)) {
+        updatedLocations = updatedLocations.filter(l => l !== location)
+      } else {
+        updatedLocations.push(location)
+      }
+      return {locationList: updatedLocations}
+    })
+
+    const {jobDetailsList, locationList} = this.state
+    const filtered = jobDetailsList.filter(job =>
+      locationList.includes(job.location),
+    )
+    this.setState(prevState => ({...prevState, jobDetailsList: filtered}))
   }
 
   convertedData = data => ({
@@ -149,6 +168,7 @@ class Jobs extends Component {
             <JobFilters
               updateEmploymentType={this.updateEmploymentType}
               updateSaleryRange={this.updateSaleryRange}
+              updateLocation={this.updateLocation}
             />
           </div>
           <div>

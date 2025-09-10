@@ -36,8 +36,31 @@ const salaryRangesList = [
   },
 ]
 
+const locationList = [
+  {
+    locationId: 'Hyderabad',
+    label: 'Hyderabad',
+  },
+  {
+    locationId: 'Bangalore',
+    label: 'Bangalore',
+  },
+  {
+    locationId: 'Chennai',
+    label: 'Chennai',
+  },
+  {
+    locationId: 'Delhi',
+    label: 'Delhi',
+  },
+  {
+    locationId: 'Mumbai',
+    label: 'Mumbai',
+  },
+]
+
 const JobFilters = props => {
-  const {updateEmploymentType, updateSaleryRange} = props
+  const {updateEmploymentType, updateSaleryRange, updateLocation} = props
 
   const changeEmployeType = event => {
     updateEmploymentType(event.target.id)
@@ -67,7 +90,6 @@ const JobFilters = props => {
 
   const renderSaleryRange = () => (
     <div>
-      <h1>Salary Range</h1>
       <ul>
         {salaryRangesList.map(eachSalery => (
           <li key={eachSalery.salaryRangeId}>
@@ -84,12 +106,37 @@ const JobFilters = props => {
     </div>
   )
 
+  const onChangeLocation = e => {
+    updateLocation(e.target.value)
+  }
+
+  const renderLocation = () => (
+    <div>
+      <h1>Location</h1>
+      <ul>
+        {locationList.map(eachLocation => (
+          <li key={eachLocation.locationId}>
+            <input
+              type="checkbox"
+              name="salery"
+              value={eachLocation.locationId}
+              onChange={onChangeLocation}
+            />
+            <label>{eachLocation.label}</label>
+          </li>
+        ))}
+      </ul>
+    </div>
+  )
+
   return (
     <div>
       {renderEmploymentTypes()}
       <hr />
       <h1>Salary Range</h1>
       {renderSaleryRange()}
+
+      {renderLocation()}
     </div>
   )
 }
